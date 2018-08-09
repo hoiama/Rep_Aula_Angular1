@@ -12,24 +12,32 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'angular.filter']);
  * Configuração do ngRoute com as rotas > controller > templates
  */
 app.config([
-    '$routeProvider', function($routeProvider){
+    '$routeProvider' , function($routeProvider){
+
         $routeProvider
             .when('/', {
                 controller:'DefaultController',
                 templateUrl:'templates/default-template.html'
             })
-            .when('/testesAngular', {
+            .when('/angular', {
                 controller:'TestesAngularController',
-                templateUrl:'templates/controller.html',
+                templateUrl:'templates/main-template.html',
+                resolve: {
+                    "listaCaronas" : function(fabricaHttpPromise){
+                        return fabricaHttpPromise.getCaronas;
+                    }
+                }
+
             })
             .otherwise({redirectTo:'/'});
     }
 
 ]);
 
+
 app.directive("minhaDiretiva", minhaDiretiva);
 app.directive("meuPainel", meuPainel);
-app.directive("minhaDiretiva", minhaDiretiva);
+
 
 /**
  * Variavel de escopo global da aplicação
@@ -43,6 +51,7 @@ app.run([
     }
 ]);
 
+
 // ** CONTROLLER's **
 
 /**
@@ -53,7 +62,8 @@ app.controller('DefaultController', function(){
 })
 
 
-app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabricaHttpPromise', function($scope, $filter, $http, fabricaHttpPromise){
+app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabricaHttpPromise', 'listaCaronas',
+                                    function($scope,  $filter,  $http,  fabricaHttpPromise,  listaCaronas){
     $scope.colors = ["White", "Black", "Blue", "Red", "Silver"];
     $scope.colors2 = ["Branco", "Preto", "Azul", "Vermelho", "Cinza"];
     $scope.mostraEsconde = ["ng-hide", "ng-if", "ng-show"];
@@ -72,6 +82,12 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.cpf = "";
     $scope.cpf2 = "";
     $scope.listCaronas = Array();
+    $scope.listCaronas2 = listaCaronas.data;
+    $scope.plateCounter = -1;
+
+    $scope.$watch("placaCarro", function () {
+        $scope.plateCounter++;
+    });
 
     $scope.carros =
         [
@@ -92,25 +108,14 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
                 console.log(erro)
             });
     }
+
+    $scope.setUsuario = function(usuario){
+        console.log(usuario);
+    }
 }]);
 
 
 // ** DIRETIVAS **
-
-/**
- * Demostração de templates
- */
-function minhaDiretiva(){
-    return {
-        template:
-            "<div class='alert'>" +
-                "<span class='alert-topic'>" +
-                    "Sou um template da diretiva minhaDiretiva!" +
-                "</span>" +
-            "</div>"
-    };
-};
-
 
 /**
  * Diretiva que retorna um ddo contendo template e propriedades do scope. parte 13
@@ -157,7 +162,9 @@ app.filter("filtroPlacas", function(){
 });
 
 
+
 // ** FABRICAS **
+
 
 app.factory("fabricaHttpPromise", function ($http) {
     var _getCaronas = function () {

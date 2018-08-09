@@ -1,5 +1,5 @@
 <br/>
-<div class="container-fluid ">
+<ul class="container-fluid ">
     <table id="tabela-geral" class="table table-striped table-dark table-responsive">
         <thead>
             <tr class="thead-dark col-centered">
@@ -256,41 +256,45 @@
                 </td>
                 <td>
                     <form name="formDadosPessoais">
+                        <input type="text" placeholder="Nome: " name="campoNome" maxlength="15"
+                               ng-model="usuario.nome"  ng-required="true" ng-minlength="3"
+                               ng-maxlength="13"  class="form-control">
+
                         <input type="text" placeholder="CPF: " name="campoCpf" maxlength="13"
-                               ng-model="cpf2"  ng-required="true" ng-minlength="12"
+                               ng-model="usuario.cpf"  ng-required="true" ng-minlength="12"
                                ng-maxlength="13" ng-pattern="/\d/" class="form-control">
 
-                        <button ng-click="set(cpf2)" ng-disabled="formDadosPessoais.$invalid" class="btn btn-info">
+                        <button type="submit" ng-click="setUsuario(usuario)" ng-disabled="formDadosPessoais.$invalid" class="btn btn-info">
                             Enviar
                         </button>
                     </form>
                 </td>
                 <td>
                     <p> {{cpf2 | filtroPlacas}}</p>
-                    <alert ng-show="formDadosPessoais.campoCpf.$dirty && formDadosPessoais.campoCpf.$invalid" topic="Algo errado!">
+                    <alert ng-show="formDadosPessoais.campoCpf.$dirty && formDadosPessoais.campoCpf.$invalid " topic="Algo errado!">
                         <div> Atencao!!! </div>
                     </alert>
 
-                    <span ng-show="formDadosPessoais.campoCpf.$error.required">
+                    <span ng-show="formDadosPessoais.campoCpf.$error.required" class="form-control alert-danger">
                         <div> Campo obrigatorio!</div>
                     </span>
 
-                    <span ng-show="formDadosPessoais.campoCpf.$error.minlength">
+                    <span ng-show="formDadosPessoais.campoCpf.$error.minlength" class="form-control alert-danger">
                         <div> Faltam caracteres! </div>
                     </span>
 
-                    <span ng-show="formDadosPessoais.campoCpf.$error.maxlength">
+                    <span ng-show="formDadosPessoais.campoCpf.$error.maxlength" class="form-control alert-danger" >
                         <div> Maximo excedido! </div>
                     </span>
 
-                    <span ng-show="formDadosPessoais.campoCpf.$error.pattern">
+                    <span ng-show="formDadosPessoais.$submitted && formDadosPessoais.campoCpf.$error.pattern " class="form-control alert-danger">
                         <div> Caracteres não permitidos!</div>
                     </span>
                 </td>
             </tr>
 
             <tr>
-                <th scope="row">15</th>
+                <th scope="row">17</th>
                 <td> $http.get </td>
                 <td width="400">
                     <div>Metodo get usando $http.get </div>
@@ -299,25 +303,41 @@
                     <button type="text" ng-click="getListCaronas()" class="btn btn-info">Get</button>
                 </td>
                 <td>
-                    <div ng-repeat="carona in listCaronas">
-                        <div> Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}</div>
-                    </div>
+                    <div  class="alinhamento-horizontal font10">
+                        <div class="border border-info rounded">
+                            <p> Usando função ng-click</p>
+                            <ul class="list-group">
+                                <div ng-repeat="carona in listCaronas">
+                                    <div> Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}</div>
+                                </div>
+                            </ul>
+                        </div>
 
+                        <div class="border border-info rounded">
+                            <p> Usando resolve no routProvider</p>
+                            <ul class="list-group">
+                                <div ng-repeat="carona in listCaronas2">
+                                    <div> Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}</div>
+                                </div>
+                            </ul>
+                        </div>
+
+                    </div>
                 </td>
             </tr>
 
             <tr>
-                <th scope="row">15</th>
-                <td>  </td>
+                <th scope="row">18</th>
+                <td> watch </td>
                 <td width="400">
+                    Efetua uma verificação do bind entre o model e a view em busca de atualizações
+                </td>
+                <td>
+                    <input type="text" ng-model="placaCarro" placeholder="Chame o 'watch'" class="form-control"/>
 
                 </td>
                 <td>
-
-                </td>
-                <td>
-
-
+                    <span>{{plateCounter}}</span>
                 </td>
             </tr>
 
