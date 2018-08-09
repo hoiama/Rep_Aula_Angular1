@@ -1,0 +1,349 @@
+<br/>
+<ul class="container-fluid ">
+    <table id="tabela-geral" class="table table-striped table-dark table-responsive">
+        <thead>
+            <tr class="thead-dark col-centered">
+                <th scope="col">#</th>
+                <th scope="col">Diretiva</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Teste</th>
+                <th scope="col">Alvo</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <th scope="row">1</th>
+                <td>ng-class</td>
+                <td width="400">
+                    Aplica uma classe em um elemento portando ng-model
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="deleted" class="checkbox"/>
+                </td>
+                <td>
+                    <h4 ng-class="{'text-danger' : deleted}">Caronas</h4>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">2</th>
+                <td>ng-style</td>
+                <td width="400">
+                    Estiliza um elemento portando ng-style.
+                </td>
+                <td>
+                    <label>Cores: </label>
+                    <select ng-model="colorSelected" ng-options="color for color in colors" class="custom-select custom-select-sm"> Selecione uma cor </select>
+                </td>
+                <td>
+                    <h4 ng-style="{color: colorSelected}"> ng-style</h4>
+                    <p >Cor selecionada {{colorSelected}} </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">3</th>
+                <td>ng-model</td>
+                <td width="400">
+                    Link uma variavel de modelo contida no controller(app.js) a um elemento na view (html), através do escopo '$scope".
+                </td>
+                <td>
+                    <label>Cores: </label>
+                    <input type="text" ng-model="ngModel" class="form-control"/>
+                </td>
+                <td>
+                    <label>Propriedade do scopo</label>
+                    <p>{{ngModel}} </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">4</th>
+                <td>ng-show </td>
+                <td width="400">
+                    Mostra o conteúdo, porém só já esta renderizado no HTML, apenas esconde quando desativado.
+                </td>
+                <td>
+                    <label>status: </label>
+                    <select ng-model="statusSelectedngShow" ng-options="estado for estado in status" ng-init="statusSelectedngShow = status[0]" class="custom-select custom-select-sm">
+                    </select>
+                </td>
+                <td>
+                    <div>
+                        <h4 ng-show="statusSelectedngShow =='Ativado'"> 'ng-if' Renderiza e mostra </h4>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">5</th>
+                <td>ng-if </td>
+                <td width="400">
+                    Mostra o conteúdo, porém só renderiza no HTML quando ativado.
+                </td>
+                <td>
+                    <label>status: </label>
+                    <select ng-model="statusSelectedngIf" ng-options="estado for estado in status" ng-init="statusSelectedngIf = status[0]" class="custom-select custom-select-sm">
+                    </select>
+                </td>
+                <td>
+                    <div>
+                        <h4 ng-if="statusSelectedngIf == 'Ativado'"> 'ng-if' Esconde </h4>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">6</th>
+                <td>ng-hide </td>
+                <td width="400">
+                    Esconde o conteúdo já renderizado.
+                </td>
+                <td>
+                    <label>status: </label>
+                    <select ng-model="statusSelectedngHide" ng-options="estado for estado in status" class="custom-select custom-select-sm">
+                    </select>
+                </td>
+                <td>
+                    <div>
+                        <h4 ng-hide="statusSelectedngHide == 'Ativado'"> 'ng-hide' Esconde </h4>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">7</th>
+                <td>ng-include </td>
+                <td width="400">
+                    Inclui um HTML externo dentro do elemento desejado.
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    <div ng-include="'templates/fragmentoHtml.html'"></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th scope="row">8</th>
+                <td>Filter </td>
+                <td width="400">
+                    <div> { 10 | currency : ' R$ '} </div>
+                    <div> { date | date: 'MMMM dd/MM/yyyy' } </div>
+                    <div> { data | json} </div>
+                    <div> scope.appTitle = $filter("uppercase")("Filtrando para Uppercase")</div>
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    <div> {{ 10 | currency:'R$'}} </div>
+                    <div> {{ data | date:'MMMM dd/MM/yyyy' }} </div>
+                    <div> {{ colors2 | json }} </div>
+                    <div> {{appTitle}} </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">9</th>
+                <td>limitTo </td>
+                <td width="400">
+                    Limita uma lista de elementos ou texto.
+                </td>
+                <td>
+                    {colors | size:3}
+                </td>
+                <td>
+                    {{colors | limitTo:3}}
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">10</th>
+                <td>lowercase </td>
+                <td width="400">
+                    Mostra em caixa baixa.
+                </td>
+                <td>
+                    {PROpriedade | lowercase }
+                </td>
+                <td>
+                    {{PROpriedade | lowercase }}
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">11</th>
+                <td>number </td>
+                <td width="400">
+                    Formatação de número.
+                </td>
+                <td>
+                    { 10 | number:3 }
+                </td>
+                <td>
+                    {{ 10 | number:3 }}
+                </td>
+            </tr>
+
+
+            <tr>
+                <th scope="row">12</th>
+                <td>Filter </td>
+                <td width="400">
+                    filtro (ng-repeat="carro in carros | orderBy:portas:order | filter:criteria)
+                </td>
+                <td>
+                    <input type="text" ng-model="criteria" placeholder="Filtro" class="form-control"/>
+                </td>
+                <td>
+                    <div ng-repeat="carro in carros | orderBy:portas:order | filter:criteria">
+                        <div>Vidro {{carro.vidro }} -  Portas {{carro.portas}} - Malas {{carro.mala}}</div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">13</th>
+                <td> Directive</td>
+                <td width="400">
+                    <div>Criamos uma diretiva chamada &lt;meu-painel&gt" referenciada como "meuPainel" no app.js, possuindo propriedades e templates proprios</div>
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    <meu-painel propriedade1="{{PROpriedade}}"></meu-painel>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">14</th>
+                <td> Directive</td>
+                <td width="400">
+                    <div>Criamos uma diretiva chamada &lt;minha-diretiva&gt" referenciada como "minhaDiretiva" no app.js, possuindo propriedades e templates proprios</div>
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    <minha-diretiva propriedade1="{{PROpriedade}}"></minha-diretiva>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">15</th>
+                <td> Filter </td>
+                <td width="400">
+                    <div>Filtro personalizado</div>
+                </td>
+                <td>
+                    <input type="text" ng-model="cpf" placeholder="CPF: " class="form-control"/>
+                </td>
+                <td>
+                    <p> {{cpf | filtroPlacas}}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">16</th>
+                <td> Form </td>
+                <td width="400">
+                    formulario de dados
+                </td>
+                <td>
+                    <form name="formDadosPessoais">
+                        <input type="text" placeholder="Nome: " name="campoNome" maxlength="15"
+                               ng-model="usuario.nome"  ng-required="true" ng-minlength="3"
+                               ng-maxlength="13"  class="form-control">
+
+                        <input type="text" placeholder="CPF: " name="campoCpf" maxlength="13"
+                               ng-model="usuario.cpf"  ng-required="true" ng-minlength="12"
+                               ng-maxlength="13" ng-pattern="/\d/" class="form-control">
+
+                        <button type="submit" ng-click="setUsuario(usuario)" ng-disabled="formDadosPessoais.$invalid" class="btn btn-info">
+                            Enviar
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <p> {{cpf2 | filtroPlacas}}</p>
+                    <alert ng-show="formDadosPessoais.campoCpf.$dirty && formDadosPessoais.campoCpf.$invalid " topic="Algo errado!">
+                        <div> Atencao!!! </div>
+                    </alert>
+
+                    <span ng-show="formDadosPessoais.campoCpf.$error.required" class="form-control alert-danger">
+                        <div> Campo obrigatorio!</div>
+                    </span>
+
+                    <span ng-show="formDadosPessoais.campoCpf.$error.minlength" class="form-control alert-danger">
+                        <div> Faltam caracteres! </div>
+                    </span>
+
+                    <span ng-show="formDadosPessoais.campoCpf.$error.maxlength" class="form-control alert-danger" >
+                        <div> Maximo excedido! </div>
+                    </span>
+
+                    <span ng-show="formDadosPessoais.$submitted && formDadosPessoais.campoCpf.$error.pattern " class="form-control alert-danger">
+                        <div> Caracteres não permitidos!</div>
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">17</th>
+                <td> $http.get </td>
+                <td width="400">
+                    <div>Metodo get usando $http.get </div>
+                </td>
+                <td>
+                    <button type="text" ng-click="getListCaronas()" class="btn btn-info">Get</button>
+                </td>
+                <td>
+                    <div  class="alinhamento-horizontal font10">
+                        <div class="border border-info rounded">
+                            <p> Usando função ng-click</p>
+                            <ul class="list-group">
+                                <div ng-repeat="carona in listCaronas">
+                                    <div> Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}</div>
+                                </div>
+                            </ul>
+                        </div>
+
+                        <div class="border border-info rounded">
+                            <p> Usando resolve no routProvider</p>
+                            <ul class="list-group">
+                                <div ng-repeat="carona in listCaronas2">
+                                    <div> Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}</div>
+                                </div>
+                            </ul>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">18</th>
+                <td> watch </td>
+                <td width="400">
+                    Efetua uma verificação do bind entre o model e a view em busca de atualizações
+                </td>
+                <td>
+                    <input type="text" ng-model="placaCarro" placeholder="Chame o 'watch'" class="form-control"/>
+
+                </td>
+                <td>
+                    <span>{{plateCounter}}</span>
+                </td>
+            </tr>
+
+
+
+
+        </tbody>
+    </table>
+</div>

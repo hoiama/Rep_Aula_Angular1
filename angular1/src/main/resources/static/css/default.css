@@ -1,9 +1,35 @@
+body{
+
+}
+
 #tabela-geral tr td {
     vertical-align:middle;
+    height:100px;
+}
+
+#tabela-geral{
+    width:100%;
+}
+
+#tabela-geral th{
+    color: #1daec5;
+    font-size: 13px;
+    text-align: center;
+}
+
+#tabela-geral{
+    font-size: 12px;
 }
 
 #tabela-geral tr th {
     vertical-align:middle;
+}
+
+.alinhamento-horizontal{
+    display: inline-flex;
+}
+.font10{
+    font-size: 10px;
 }
 
 .ng-hide-add {  -webkit-transition: all 5s linear;  -moz-transition: all 5s linear;  -ms-transition: all 5s linear;  -o-transition: all 5s linear;  transition: all 5s linear;  opacity: 1;}
