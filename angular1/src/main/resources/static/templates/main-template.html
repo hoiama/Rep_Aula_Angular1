@@ -255,41 +255,40 @@
                     formulario de dados
                 </td>
                 <td>
-                    <form name="formDadosPessoais">
+                    <form name="formDadosPessoais" ng-submit="setUsuario()">
                         <input type="text" placeholder="Nome: " name="campoNome" maxlength="15"
                                ng-model="usuario.nome"  ng-required="true" ng-minlength="3"
                                ng-maxlength="13"  class="form-control">
+
 
                         <input type="text" placeholder="CPF: " name="campoCpf" maxlength="13"
                                ng-model="usuario.cpf"  ng-required="true" ng-minlength="12"
                                ng-maxlength="13" ng-pattern="/\d/" class="form-control">
 
-                        <button type="submit" ng-click="setUsuario(usuario)" ng-disabled="formDadosPessoais.$invalid" class="btn btn-info">
+                        <span ng-show="formDadosPessoais.$dirty && formDadosPessoais.campoCpf.$error.required" class="form-control alert-danger">
+                            <div> Campo obrigatorio!</div>
+                        </span>
+
+                        <span ng-show="formDadosPessoais.campoCpf.$error.minlength" class="form-control alert-danger">
+                            <div> Faltam caracteres! </div>
+                        </span>
+
+                        <span ng-show="formDadosPessoais.campoCpf.$error.maxlength" class="form-control alert-danger" >
+                            <div> Maximo excedido! </div>
+                        </span>
+
+                        <span ng-show="formDadosPessoais.$submitted && formDadosPessoais.campoCpf.$error.pattern " class="form-control alert-danger">
+                            <div> Caracteres não permitidos!</div>
+                        </span>
+
+                        <button type="submit"  ng-disabled="formDadosPessoais.$invalid" class="btn btn-info">
                             Enviar
                         </button>
                     </form>
                 </td>
                 <td>
                     <p> {{cpf2 | filtroPlacas}}</p>
-                    <alert ng-show="formDadosPessoais.campoCpf.$dirty && formDadosPessoais.campoCpf.$invalid " topic="Algo errado!">
-                        <div> Atencao!!! </div>
-                    </alert>
 
-                    <span ng-show="formDadosPessoais.campoCpf.$error.required" class="form-control alert-danger">
-                        <div> Campo obrigatorio!</div>
-                    </span>
-
-                    <span ng-show="formDadosPessoais.campoCpf.$error.minlength" class="form-control alert-danger">
-                        <div> Faltam caracteres! </div>
-                    </span>
-
-                    <span ng-show="formDadosPessoais.campoCpf.$error.maxlength" class="form-control alert-danger" >
-                        <div> Maximo excedido! </div>
-                    </span>
-
-                    <span ng-show="formDadosPessoais.$submitted && formDadosPessoais.campoCpf.$error.pattern " class="form-control alert-danger">
-                        <div> Caracteres não permitidos!</div>
-                    </span>
                 </td>
             </tr>
 
