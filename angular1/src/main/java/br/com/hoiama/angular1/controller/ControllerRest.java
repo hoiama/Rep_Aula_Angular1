@@ -1,52 +1,34 @@
 package br.com.hoiama.angular1.controller;
 
-import br.com.hoiama.angular1.Entity.Carona;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
+import br.com.hoiama.angular1.entity.Carona;
+import br.com.hoiama.angular1.entity.repository.CaronaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import br.com.hoiama.angular1.factory.FabricaCaronas;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/carona")
 public class ControllerRest {
 
+    @Autowired
+    FabricaCaronas caronas;
+
+    @Autowired
+    CaronaRepository caronaRepository;
+
     @RequestMapping(value="", method= RequestMethod.GET)
-    public ArrayList<Carona> getListCaronas(){
-        Carona carona1 = new Carona();
-        carona1.setDestinoCondutor("são leopoldo");
-        carona1.setNoneCondutor("hoiama");
-
-        Carona carona2 = new Carona();
-        carona2.setDestinoCondutor("Novo hamburgo");
-        carona2.setNoneCondutor("thiado");
-
-        Carona carona3 = new Carona();
-        carona3.setDestinoCondutor("Novo hamburgo");
-        carona3.setNoneCondutor("thiado");
-
-        Carona carona4 = new Carona();
-        carona4.setDestinoCondutor("Novo hamburgo");
-        carona4.setNoneCondutor("thiado");
-
-        Carona carona5 = new Carona();
-        carona5.setDestinoCondutor("Novo hamburgo");
-        carona5.setNoneCondutor("thiado");
-
-        ArrayList<Carona> listCaronas = new ArrayList<Carona>();
-        listCaronas.add(carona1);
-        listCaronas.add(carona2);
-        listCaronas.add(carona3);
-        listCaronas.add(carona4);
-        listCaronas.add(carona5);
-        return listCaronas;
+    public List<Carona> getListCaronas(){
+       return caronaRepository.findAll();
     }
 
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public void postCarona (){
-
+    public void postCarona (@RequestBody Carona carona){
+        System.out.println("post chegou" + carona.getDestinoCondutor());
+        System.out.println("post chegou" + carona.getNoneCondutor());
+        caronaRepository.save(carona);
     }
 
     @RequestMapping(value="", method = RequestMethod.PUT)
@@ -54,9 +36,12 @@ public class ControllerRest {
 
     }
 
-    @RequestMapping(value="", method = RequestMethod.DELETE)
-    public void deleteCarona (){
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    public void deleteCarona (@PathVariable int id){
 
+        System.out.println("numero : " + id);
+
+        caronaRepository.deleteById(id);
     }
 
 }

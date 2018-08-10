@@ -1,4 +1,3 @@
-
 /**
  * Declaração de módulo 'app' usando modulo ngRoute para criacao de rotas
  *
@@ -23,9 +22,7 @@ app.config([
                 controller:'TestesAngularController',
                 templateUrl:'templates/main-template.html',
                 resolve: {
-                    "listaCaronas" : function(fabricaHttpPromise){
-                        return fabricaHttpPromise.getCaronas;
-                    }
+                    "listaCaronas" : function(fabricaHttpPromise){return fabricaHttpPromise.getCaronas()}
                 }
 
             })
@@ -50,6 +47,7 @@ app.run([
         console.log('app.run');
     }
 ]);
+
 
 
 // ** CONTROLLER's **
@@ -83,12 +81,14 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.cpf2 = "";
     $scope.listCaronas = Array();
     $scope.listCaronas2 = listaCaronas.data;
+    $scope.listCaronas3 = listaCaronas.data;
     $scope.plateCounter = -1;
 
 
     $scope.$watch("placaCarro", function () {
         $scope.plateCounter++;
     });
+
 
     $scope.carros =
         [
@@ -99,21 +99,53 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
 
 
     $scope.getListCaronas = function(){
-        fabricaHttpPromise.getCaronas
+        fabricaHttpPromise.getCaronas()
             .then(function(data, status) {
                 console.log("retorno: ", data);
                 console.log("estado: " , status);
                 $scope.listCaronas = data.data;
+                $scope.listCaronas3 = data.data;
             })
             .catch(function(erro) {
                 console.log(erro)
             });
     }
 
-    $scope.setUsuario = function(){
-        console.log("usuario:", $scope.usuario);
+
+    $scope.setCarona = function(){
+        console.log("carona:", $scope.carona);
+        fabricaHttpPromise.postCarona($scope.carona)
+            .then(function(respost){
+                console.log(respost);
+                $scope.getListCaronas();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
-}]);
+
+
+    $scope.deleteCarona = function(id){
+        console.log("Deletar id:", id);
+        fabricaHttpPromise
+            .deleteCarona(id)
+            .then(function(respost){
+                console.log(respost);
+                $scope.getListCaronas();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    $scope.setUsuario = function(){
+        console.log("usuario:", $scope.carona);
+    }
+
+
+
+    }]);
+
 
 
 // ** DIRETIVAS **
@@ -150,7 +182,9 @@ function minhaDiretiva (){
 };
 
 
+
 // ** FILTROS **
+
 
 app.filter("filtroPlacas", function(){
     return function (input) {
@@ -180,15 +214,15 @@ app.factory("fabricaHttpPromise", function ($http) {
         return $http.put("/carona", carona);
     }
 
-    var _deleteCarona = function(carona){
-        return $http.delete("/carona");
+    var _deleteCarona = function(id){
+        return $http.delete("/carona/" + id);
     }
 
     return {
-        getCaronas : _getCaronas(),
-        postCarona : _postCarona(),
-        putCarona : _putCarona(),
-        deleteCarona : _deleteCarona()
+        getCaronas : _getCaronas,
+        postCarona : _postCarona,
+        putCarona : _putCarona,
+        deleteCarona : _deleteCarona
     }
 })
 

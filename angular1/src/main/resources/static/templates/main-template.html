@@ -248,7 +248,7 @@
                 </td>
             </tr>
 
-            <tr>
+             <tr>
                 <th scope="row">16</th>
                 <td> Form </td>
                 <td width="400">
@@ -256,30 +256,29 @@
                 </td>
                 <td>
                     <form name="formDadosPessoais" ng-submit="setUsuario()">
-                        <input type="text" placeholder="Nome: " name="campoNome" maxlength="15"
-                               ng-model="usuario.nome"  ng-required="true" ng-minlength="3"
-                               ng-maxlength="13"  class="form-control">
+                        <div class="form-group">
+                            <input type="text" placeholder="Nome: " name="campoNome" maxlength="15" ng-model="usuario.nome" ng-minlength="3" ng-maxlength="13"  class="form-control-sm is-invalid" id="validaNomeUsuario"/>
+                        </div>
 
+                        <div class="form-group">
+                            <input type="text" placeholder="CPF: " name="campoCpf" maxlength="13" ng-model="usuario.cpf"  ng-required="true" ng-minlength="12" ng-maxlength="13" ng-pattern="/\d/" class="form-control-sm" for="alerta-campo-obrigatorio">
 
-                        <input type="text" placeholder="CPF: " name="campoCpf" maxlength="13"
-                               ng-model="usuario.cpf"  ng-required="true" ng-minlength="12"
-                               ng-maxlength="13" ng-pattern="/\d/" class="form-control">
+                            <small id="alerta-campo-obrigatorio" ng-show="formDadosPessoais.campoCpf.$dirty && formDadosPessoais.campoCpf.$error.required" class="form-text text-muted">
+                                <div class="text-danger"> Campo obrigatorio!</div>
+                            </small>
 
-                        <span ng-show="formDadosPessoais.$dirty && formDadosPessoais.campoCpf.$error.required" class="form-control alert-danger">
-                            <div> Campo obrigatorio!</div>
-                        </span>
+                            <small ng-show="formDadosPessoais.campoCpf.$dirty && formDadosPessoais.campoCpf.$error.minlength" class="form-text text-muted">
+                                <div class="text-warning"> Faltam caracteres! </div>
+                            </small>
 
-                        <span ng-show="formDadosPessoais.campoCpf.$error.minlength" class="form-control alert-danger">
-                            <div> Faltam caracteres! </div>
-                        </span>
+                            <small ng-show="formDadosPessoais.campoCpf.$error.maxlength" class="form-text text-muted" >
+                                <div class="text-danger"> Maximo excedido! </div>
+                            </small>
 
-                        <span ng-show="formDadosPessoais.campoCpf.$error.maxlength" class="form-control alert-danger" >
-                            <div> Maximo excedido! </div>
-                        </span>
-
-                        <span ng-show="formDadosPessoais.$submitted && formDadosPessoais.campoCpf.$error.pattern " class="form-control alert-danger">
-                            <div> Caracteres não permitidos!</div>
-                        </span>
+                            <small ng-show="formDadosPessoais.campoCpf.$error.pattern " class="form-text text-muted">
+                                <div class="text-warning"> Caracteres não permitidos!</div>
+                            </small>
+                        </div>
 
                         <button type="submit"  ng-disabled="formDadosPessoais.$invalid" class="btn btn-info">
                             Enviar
@@ -296,7 +295,7 @@
                 <th scope="row">17</th>
                 <td> $http.get </td>
                 <td width="400">
-                    <div>Metodo get usando $http.get </div>
+                    <div>Metodo get usando $http.get, coluna da esquerda usando ng-click que chama requisição a cada clique do botão, e na direita usamos routeProvider que faz requisição na renderização do template + controller </div>
                 </td>
                 <td>
                     <button type="text" ng-click="getListCaronas()" class="btn btn-info">Get</button>
@@ -316,7 +315,11 @@
                             <p> Usando resolve no routProvider</p>
                             <ul class="list-group">
                                 <div ng-repeat="carona in listCaronas2">
-                                    <div> Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}</div>
+                                    <div>
+                                        Condutor: {{carona.noneCondutor}} -
+                                        Destino: {{carona.destinoCondutor}}
+                                        <a href="/{{carona.idCarona}}"> X </a>
+                                    </div>
                                 </div>
                             </ul>
                         </div>
@@ -340,7 +343,48 @@
                 </td>
             </tr>
 
+            <tr>
+                <th scope="row">19</th>
+                <td> Form </td>
+                <td width="400">
+                    formulario de dados
+                </td>
+                <td>
+                    <form name="formDadosCarona" ng-submit="setCarona()">
+                        <div class="form-group">
+                            <input type="text" placeholder="Nome: " name="noneCondutor" maxlength="20" ng-model="carona.noneCondutor" ng-minlength="3" ng-maxlength="20"  class="form-control-sm"/>
+                        </div>
 
+                        <div class="form-group">
+                            <input type="text" placeholder="Destino do condutor: " name="destinoCondutor" ng-model="carona.destinoCondutor"  ng-required="true" ng-minlength="1" ng-maxlength="20" class="form-control-sm">
+
+                            <small ng-show="formDadosCarona.destinoCondutor.$dirty && formDadosCarona.destinoCondutor.$error.required" class="form-text text-muted">
+                                <div class="text-danger"> Campo obrigatorio!</div>
+                            </small>
+
+                            <small ng-show="formDadosCarona.destinoCondutor.$dirty && formDadosCarona.destinoCondutor.$error.minlength" class="form-text text-muted">
+                                <div class="text-warning"> Faltam caracteres! </div>
+                            </small>
+                        </div>
+
+                        <button type="submit"  ng-disabled="formDadosCarona.$invalid" class="btn btn-info">
+                            Enviar
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <div class="border border-info rounded">
+                        <ul class="list-group">
+                            <div ng-repeat="carona in listCaronas3">
+                                <div>
+                                    Condutor: {{carona.noneCondutor}} - Destino: {{carona.destinoCondutor}}
+                                    <button ng-click="deleteCarona(carona.idCarona)"> X </button>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
 
 
         </tbody>
