@@ -85,6 +85,7 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.listCaronas2 = listaCaronas.data;
     $scope.plateCounter = -1;
 
+
     $scope.$watch("placaCarro", function () {
         $scope.plateCounter++;
     });
@@ -109,8 +110,8 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
             });
     }
 
-    $scope.setUsuario = function(usuario){
-        console.log(usuario);
+    $scope.setUsuario = function(){
+        console.log("usuario:", $scope.usuario);
     }
 }]);
 
