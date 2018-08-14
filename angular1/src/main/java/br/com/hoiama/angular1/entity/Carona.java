@@ -18,7 +18,7 @@ public class Carona {
     private int idCarona;
 
     @Column(name = "NomeCondutor")
-    private String noneCondutor;
+    private String nomeCondutor;
 
     @Column(name="destinoCondutor")
     private String destinoCondutor;
@@ -32,12 +32,12 @@ public class Carona {
         this.idCarona = idCarona;
     }
 
-    public String getNoneCondutor() {
-        return noneCondutor;
+    public String getNomeCondutor() {
+        return nomeCondutor;
     }
 
-    public void setNoneCondutor(String noneCondutor) {
-        this.noneCondutor = noneCondutor;
+    public void setNomeCondutor(String nomeCondutor) {
+        this.nomeCondutor = nomeCondutor;
     }
 
     public String getDestinoCondutor() {

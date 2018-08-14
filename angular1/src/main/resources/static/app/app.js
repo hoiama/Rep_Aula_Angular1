@@ -4,7 +4,7 @@
  * ngRoute -  sistema de roteamento de URLs
  * angular.filter - filtro personalizado criado
  */
-var app = angular.module('app', ['ngRoute', 'ngResource', 'angular.filter']);
+var app = angular.module('app', ['ngRoute', 'ngResource', 'ngResource', 'angular.filter']);
 
 
 /**
@@ -60,8 +60,7 @@ app.controller('DefaultController', function(){
 })
 
 
-app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabricaHttpPromise', 'listaCaronas',
-                                    function($scope,  $filter,  $http,  fabricaHttpPromise,  listaCaronas){
+app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabricaHttpPromise', 'listaCaronas', '$resource', function($scope,  $filter,  $http,  fabricaHttpPromise,  listaCaronas, $resource){
     $scope.colors = ["White", "Black", "Blue", "Red", "Silver"];
     $scope.colors2 = ["Branco", "Preto", "Azul", "Vermelho", "Cinza"];
     $scope.mostraEsconde = ["ng-hide", "ng-if", "ng-show"];
@@ -83,6 +82,110 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.listCaronas2 = listaCaronas.data;
     $scope.listCaronas3 = listaCaronas.data;
     $scope.plateCounter = -1;
+    $scope.carona = {};
+
+
+    var recursoCarona = $resource("carona/:idCarona");
+
+    $scope.getListCaronas2 = function(){
+        recursoCarona.query(
+            function (retorno) {
+                console.log("retorno do get", retorno);
+                $scope.mensagemSucesso = "Lista Obtida com sucesso";
+            },
+            function (erro) {
+                console.log(erro);
+            }
+        )
+    }
+
+    $scope.deleteCarona2 = function(carona){
+        recursoCarona.delete({idCarona : carona.idCarona},
+            function (retorno) {
+                console.log("retorno do delete", retorno);
+                var indiceCarona = $scope.listCaronas3.indexOf(carona);
+                $scope.listCaronas3.splice(indiceCarona, 1);
+                console.log(carona.nomeCondutor, "foi removido");
+                $scope.mensagemSucesso = carona.nomeCondutor + " Removido com sucesso";
+            },
+            function (erro) {
+                console.log(erro);
+            }
+       );
+    }
+
+
+    $scope.getListCaronas = function(){
+        fabricaHttpPromise.getCaronas()
+            .then(function(data, status) {
+                console.log("Dados de retorno do Get: ", data);
+                console.log("estado do Get: " , status);
+                $scope.listCaronas = data.data;
+                $scope.listCaronas3 = data.data;
+            })
+            .catch(function(erro) {
+                console.log(erro)
+            });
+    }
+
+
+    $scope.setCarona = function(){
+        if($scope.carona.idCarona){
+            console.log("Editando", $scope.carona.nomeCondutor);
+            $scope.editCarona();
+        }else {
+            console.log("carona:", $scope.carona);
+            fabricaHttpPromise.postCarona($scope.carona)
+                .then(function (respost) {
+                    console.log("Resposta do Post no servidor:", respost);
+                    $scope.getListCaronas();
+                    $scope.mensagemSucesso = $scope.carona.nomeCondutor + " Adicionado com sucesso";
+                    $scope.carona = {};
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
+
+    $scope.editCarona = function(){
+        fabricaHttpPromise
+            .putCarona($scope.carona)
+            .then(function(resposta){
+                console.log("Edição de carona", $scope.carona.idCarona ,$scope.carona.nomeCondutor);
+                $scope.carona = {};/**/
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+    }
+
+
+    $scope.edit = function(carona){
+        console.log(carona);
+        $scope.carona.nomeCondutor = carona.nomeCondutor;
+        $scope.carona.destinoCondutor = carona.destinoCondutor;
+        $scope.carona.idCarona = carona.idCarona;
+    }
+
+
+    $scope.deleteCarona = function(carona){
+        console.log("Deletar id:", carona.idCarona);
+        fabricaHttpPromise
+            .deleteCarona(carona.idCarona)
+            .then(function(respost){
+                console.log(respost);
+                var indiceCarona = $scope.listCaronas3.indexOf(carona);
+                console.log("index é :", indiceCarona);
+                $scope.listCaronas3.splice(indiceCarona, 1);
+                console.log(carona.nomeCondutor, "foi removido");
+                $scope.mensagemSucesso = carona.nomeCondutor + " Removido com sucesso";
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 
 
     $scope.$watch("placaCarro", function () {
@@ -97,54 +200,14 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
             {vidro: 3, portas: 6,mala: 9},
         ]
 
-
-    $scope.getListCaronas = function(){
-        fabricaHttpPromise.getCaronas()
-            .then(function(data, status) {
-                console.log("retorno: ", data);
-                console.log("estado: " , status);
-                $scope.listCaronas = data.data;
-                $scope.listCaronas3 = data.data;
-            })
-            .catch(function(erro) {
-                console.log(erro)
-            });
-    }
-
-
-    $scope.setCarona = function(){
-        console.log("carona:", $scope.carona);
-        fabricaHttpPromise.postCarona($scope.carona)
-            .then(function(respost){
-                console.log(respost);
-                $scope.getListCaronas();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-
-    $scope.deleteCarona = function(id){
-        console.log("Deletar id:", id);
-        fabricaHttpPromise
-            .deleteCarona(id)
-            .then(function(respost){
-                console.log(respost);
-                $scope.getListCaronas();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
+    /**
+     * linha 16 -  insere cadastro de nome e cpf no console
+     */
     $scope.setUsuario = function(){
         console.log("usuario:", $scope.carona);
     }
 
-
-
-    }]);
+}]);
 
 
 
@@ -211,7 +274,7 @@ app.factory("fabricaHttpPromise", function ($http) {
     }
 
     var _putCarona = function (carona) {
-        return $http.put("/carona", carona);
+        return $http.put("/carona/"+carona.idCarona, carona);
     }
 
     var _deleteCarona = function(id){

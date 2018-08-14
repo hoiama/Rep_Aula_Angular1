@@ -27,20 +27,20 @@ public class ControllerRest {
     @RequestMapping(value="", method = RequestMethod.POST)
     public void postCarona (@RequestBody Carona carona){
         System.out.println("post chegou" + carona.getDestinoCondutor());
-        System.out.println("post chegou" + carona.getNoneCondutor());
+        System.out.println("post chegou" + carona.getNomeCondutor());
         caronaRepository.save(carona);
     }
 
-    @RequestMapping(value="", method = RequestMethod.PUT)
-    public void putCarona (){
-
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    public void putCarona (Carona carona, @PathVariable int id){
+        System.out.println("Editando numero " + id);
+        caronaRepository.save(carona);
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
     public void deleteCarona (@PathVariable int id){
 
         System.out.println("numero : " + id);
-
         caronaRepository.deleteById(id);
     }
 

@@ -11,23 +11,23 @@ public class FabricaCaronas {
     public ArrayList<Carona> getListaCaronas() {
         Carona carona1 = new Carona();
         carona1.setDestinoCondutor("são leopoldo");
-        carona1.setNoneCondutor("hoiama");
+        carona1.setNomeCondutor("hoiama");
 
         Carona carona2 = new Carona();
         carona2.setDestinoCondutor("Novo hamburgo");
-        carona2.setNoneCondutor("thiado");
+        carona2.setNomeCondutor("thiado");
 
         Carona carona3 = new Carona();
         carona3.setDestinoCondutor("Novo hamburgo");
-        carona3.setNoneCondutor("thiado");
+        carona3.setNomeCondutor("thiado");
 
         Carona carona4 = new Carona();
         carona4.setDestinoCondutor("Novo hamburgo");
-        carona4.setNoneCondutor("thiado");
+        carona4.setNomeCondutor("thiado");
 
         Carona carona5 = new Carona();
         carona5.setDestinoCondutor("Novo hamburgo");
-        carona5.setNoneCondutor("thiado");
+        carona5.setNomeCondutor("thiado");
 
         ArrayList<Carona> listCaronas = new ArrayList<Carona>();
         listCaronas.add(carona1);
