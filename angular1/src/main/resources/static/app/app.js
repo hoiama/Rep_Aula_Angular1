@@ -4,7 +4,7 @@
  * ngRoute -  sistema de roteamento de URLs
  * angular.filter - filtro personalizado criado
  */
-var app = angular.module('app', ['ngRoute', 'ngResource', 'ngResource', 'angular.filter']);
+var app = angular.module('app', ['ngRoute', 'ngResource', 'meusServicoModulo', 'angular.filter']);
 
 
 /**
@@ -60,7 +60,7 @@ app.controller('DefaultController', function(){
 })
 
 
-app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabricaHttpPromise', 'listaCaronas', '$resource', function($scope,  $filter,  $http,  fabricaHttpPromise,  listaCaronas, $resource){
+app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabricaHttpPromise', 'listaCaronas', 'recursoCarona', function($scope,  $filter,  $http,  fabricaHttpPromise,  listaCaronas, recursoCarona){
     $scope.colors = ["White", "Black", "Blue", "Red", "Silver"];
     $scope.colors2 = ["Branco", "Preto", "Azul", "Vermelho", "Cinza"];
     $scope.mostraEsconde = ["ng-hide", "ng-if", "ng-show"];
@@ -83,15 +83,15 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.listCaronas3 = listaCaronas.data;
     $scope.plateCounter = -1;
     $scope.carona = {};
-
-
-    var recursoCarona = $resource("carona/:idCarona");
+    $scope.listCaronaCondutor;
 
     $scope.getListCaronas2 = function(){
         recursoCarona.query(
             function (retorno) {
                 console.log("retorno do get", retorno);
                 $scope.mensagemSucesso = "Lista Obtida com sucesso";
+                $scope.listCaronas = retorno.data;
+                $scope.listCaronas3 = retorno.data;
             },
             function (erro) {
                 console.log(erro);

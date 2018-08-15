@@ -1,6 +1,6 @@
 <br/>
 <ul class="container-fluid ">
-    <table id="tabela-geral" class="table table-striped table-dark table-responsive">
+    <table id="tabela-geral" class="table table-striped table-dark">
         <thead>
             <tr class="thead-dark col-centered">
                 <th scope="col">#</th>
@@ -394,6 +394,22 @@
                 </td>
             </tr>
 
+            <tr>
+                <th scope="row">18</th>
+                <td> Option </td>
+                <td width="400">
+                    Carrega uma option select com dados do servidor.
+                </td>
+                <td>
+                    <p>Condutor: </p>
+                    <select ng-model="listCaronaCondutor" ng-options="carona.idCarona as carona.nomeCondutor for carona in listCaronas3" class="form-control form-control-sm">
+                        <option value="">Escolha um condutor</option>
+                    </select>
+                </td>
+                <td>
+                    <span>Id : {{listCaronaCondutor}}</span>
+                </td>
+            </tr>
 
         </tbody>
     </table>
