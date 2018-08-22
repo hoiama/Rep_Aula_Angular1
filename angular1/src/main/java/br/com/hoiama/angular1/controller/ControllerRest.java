@@ -32,8 +32,11 @@ public class ControllerRest {
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
-    public void putCarona (Carona carona, @PathVariable int id){
+    public void putCarona (@RequestBody Carona carona, @PathVariable int id){
+        System.out.println(carona);
         System.out.println("Editando numero " + id);
+        System.out.println("Novo nome: " + carona.getNomeCondutor());
+        System.out.println("Novo Condutor: " + carona.getDestinoCondutor());
         caronaRepository.save(carona);
     }
 

@@ -85,13 +85,16 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.carona = {};
     $scope.listCaronaCondutor;
 
+    /**
+     * Get usando '$resource'
+     */
     $scope.getListCaronas2 = function(){
         recursoCarona.query(
             function (retorno) {
                 console.log("retorno do get", retorno);
                 $scope.mensagemSucesso = "Lista Obtida com sucesso";
-                $scope.listCaronas = retorno.data;
-                $scope.listCaronas3 = retorno.data;
+                $scope.listCaronas = retorno;
+                $scope.listCaronas3 = retorno;
             },
             function (erro) {
                 console.log(erro);
@@ -99,6 +102,46 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
         )
     }
 
+    /**
+     * Set usando '$resource' servindo para salvar ou editar
+     */
+    $scope.setCarona2 = function(){
+        if($scope.carona.idCarona){
+            $scope.editCarona2();
+            console.log("editando");
+        }else{
+            recursoCarona.save($scope.carona,
+                function () {
+                    $scope.getListCaronas2();
+                    $scope.mensagemSucesso = $scope.carona.nomeCondutor + " Adicionado com sucesso";
+                    $scope.carona = {};
+                },
+                function () {
+                    $scope.mensagemSucesso = "erro ao salvar";
+                })
+        }
+    }
+
+    /**
+     * Edit usando '$resource', é usado pelo método SetCarona2
+     */
+    $scope.editCarona2 = function(){
+        recursoCarona.update({idCarona:$scope.carona.idCarona}, $scope.carona,
+            function () {
+                $scope.getListCaronas2();
+                $scope.mensagemSucesso = $scope.carona.nomeCondutor + " Adicionado com sucesso";
+                $scope.carona = {};
+            },
+            function (erro) {
+                $scope.mensagemSucesso = "erro em alterar carona";
+                console.log(erro);
+            })
+    }
+
+    /**
+     * Delete usando '$resource'
+     * @param carona
+     */
     $scope.deleteCarona2 = function(carona){
         recursoCarona.delete({idCarona : carona.idCarona},
             function (retorno) {
@@ -111,8 +154,9 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
             function (erro) {
                 console.log(erro);
             }
-       );
+        );
     }
+
 
 
     $scope.getListCaronas = function(){
@@ -147,7 +191,6 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
                 });
         }
     }
-
 
     $scope.editCarona = function(){
         fabricaHttpPromise
