@@ -12,7 +12,6 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'meusServicoModulo', '
  */
 app.config([
     '$routeProvider' , function($routeProvider){
-
         $routeProvider
             .when('/', {
                 controller:'DefaultController',
@@ -28,9 +27,7 @@ app.config([
             })
             .otherwise({redirectTo:'/'});
     }
-
 ]);
-
 
 app.directive("minhaDiretiva", minhaDiretiva);
 app.directive("meuPainel", meuPainel);
@@ -49,14 +46,12 @@ app.run([
 ]);
 
 
-
 // ** CONTROLLER's **
 
 /**
  * Controller padrão da página princinal
  */
 app.controller('DefaultController', function(){
-
 })
 
 
@@ -158,7 +153,9 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     }
 
 
-
+    /**
+     * Usando $Http
+     */
     $scope.getListCaronas = function(){
         fabricaHttpPromise.getCaronas()
             .then(function(data, status) {
@@ -191,6 +188,7 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
                 });
         }
     }
+
 
     $scope.editCarona = function(){
         fabricaHttpPromise
@@ -234,7 +232,6 @@ app.controller("TestesAngularController", ['$scope', '$filter', '$http', 'fabric
     $scope.$watch("placaCarro", function () {
         $scope.plateCounter++;
     });
-
 
     $scope.carros =
         [

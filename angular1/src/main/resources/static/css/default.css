@@ -28,9 +28,21 @@ body{
 .alinhamento-horizontal{
     display: inline-flex;
 }
+
 .font10{
     font-size: 10px;
 }
 
-.ng-hide-add {  -webkit-transition: all 5s linear;  -moz-transition: all 5s linear;  -ms-transition: all 5s linear;  -o-transition: all 5s linear;  transition: all 5s linear;  opacity: 1;}
-.ng-hide-add-active {  display: block !important;  opacity: 0;}
+.ng-hide-add {
+    -webkit-transition: all 5s linear;
+    -moz-transition: all 5s linear;
+    -ms-transition: all 5s linear;
+    -o-transition: all 5s linear;
+    transition: all 5s linear;
+    opacity: 1;
+}
+
+.ng-hide-add-active {
+    display: block !important;
+    opacity: 0;
+}

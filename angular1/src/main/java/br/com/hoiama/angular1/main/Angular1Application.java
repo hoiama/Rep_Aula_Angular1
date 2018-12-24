@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan (basePackageClasses = {Carona.class})
 @EnableJpaRepositories (basePackageClasses = {CaronaRepository.class})
 public class Angular1Application {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Angular1Application.class, args);
 	}

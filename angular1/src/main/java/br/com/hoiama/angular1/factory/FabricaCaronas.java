@@ -2,7 +2,6 @@ package br.com.hoiama.angular1.factory;
 
 import br.com.hoiama.angular1.entity.Carona;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 
 @Component
@@ -37,6 +36,4 @@ public class FabricaCaronas {
         listCaronas.add(carona5);
         return listCaronas;
     }
-
-
 }

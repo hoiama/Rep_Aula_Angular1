@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import br.com.hoiama.angular1.factory.FabricaCaronas;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/carona")
 public class ControllerRest {
@@ -22,7 +21,6 @@ public class ControllerRest {
     public List<Carona> getListCaronas(){
        return caronaRepository.findAll();
     }
-
 
     @RequestMapping(value="", method = RequestMethod.POST)
     public void postCarona (@RequestBody Carona carona){
@@ -42,7 +40,6 @@ public class ControllerRest {
 
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
     public void deleteCarona (@PathVariable int id){
-
         System.out.println("numero : " + id);
         caronaRepository.deleteById(id);
     }
